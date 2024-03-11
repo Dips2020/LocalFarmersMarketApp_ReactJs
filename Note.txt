@@ -1,0 +1,11 @@
+cd react-app => {
+    npm i
+    installed tailwind css
+    npm i yup
+    npm install formik --save
+    react-icons -> (google icon)
+    npm install firebase
+    npm install react-router-dom
+
+}
+
