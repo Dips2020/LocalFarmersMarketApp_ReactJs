@@ -6,6 +6,6 @@ cd react-app => {
     react-icons -> (google icon)
     npm install firebase
     npm install react-router-dom
-
+    npm i react-typed
 }
 

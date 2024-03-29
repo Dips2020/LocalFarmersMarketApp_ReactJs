@@ -1,12 +1,46 @@
 import { Formik } from "formik";
 import TextField from "../userSignUp/TextField";
 import firstImg from "../../../assets/firstImg.png";
+import { getUserByEmailPassword } from "../../DatabaseOperation/DatabaseOperation";
+import { useNavigate } from "react-router-dom";
+//
+import { useContext } from "react";
+import { UserContext } from "../GoogleAuth/UserGoogleAuthentication";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext); // Destructure setUser to update user state
+
+  const handleFormSubmit = async (values) => {
+    console.log("Logging in with:", values);
+    try {
+      const userExists = await getUserByEmailPassword(
+        values.email,
+        values.password
+      );
+      console.log("User exists:", userExists);
+      if (userExists) {
+        setUser({
+          email: values.email,
+          password: values.password,
+        });
+        console.log("Login successful !!. Please wait...");
+        navigate("/");
+      } else {
+        console.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+
   return (
-    <Formik initialValues={{ email: "", password: "" }}>
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      onSubmit={handleFormSubmit}
+    >
       {({ handleSubmit }) => (
-        <div className="bg-[#c5c4c4] h-screen w-full flex justify-center items-center">
+        <div className="bg-[#c5c4c4] h-screen w-screen flex justify-center items-center absolute z-30">
           <div className="flex w-[80%] h-[550px] justify-center items-center drop-shadow-[0_35px_35px_rgba(0,0,0,0.8)]">
             <div className="h-[550px] w-[550px]">
               <img
@@ -30,7 +64,7 @@ const Login = () => {
                   <TextField name="email" label="Email" />
                 </div>
                 <div>
-                  <TextField name="password" label="Password" />
+                  <TextField name="password" label="Password" type="password" />
                 </div>
               </div>
               <button

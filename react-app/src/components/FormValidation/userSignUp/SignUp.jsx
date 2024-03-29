@@ -4,25 +4,72 @@ import TextField from "./TextField";
 import { FcGoogle } from "react-icons/fc";
 import firstImg from "../../../assets/firstImg.png";
 import { insertUserData } from "../../DatabaseOperation/DatabaseOperation";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useContext } from "react"; // using this useContext hook for google authentication
+import { UserContext } from "../GoogleAuth/UserGoogleAuthentication";
+import { getUserByEmail } from "../../DatabaseOperation/DatabaseOperation";
 
 const SignUp = () => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isGoogleLoginSuccess, setIsGoogleLoginSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (values, { resetForm }) => {
     console.log(values);
     try {
+      // **** Check if the user already exists with the same email name -----------------------
+      const userExists = await getUserByEmail(values.email);
+      if (userExists) {
+        console.error(
+          "User with this email address already exists.\nPlease try with different email address."
+        );
+        return;
+      }
+
       await insertUserData(values); // Call function to insert data into database
-      setIsSuccess(true); // Set isSuccess state to true
+      setIsSuccess(true); // Set isSuccess state to true after successful -- create account
+      setTimeout(() => {
+        navigate("/login");
+        window.location.reload();
+      }, 5000);
       resetForm(); // Reset form fields after submission
     } catch (error) {
       console.log("Error occurred:", error);
     }
   };
 
+  // handle google sign in
+  const { googleSignIn, user } = useContext(UserContext);
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+      setIsGoogleLoginSuccess(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    // console.log("isGoogleLoginSuccess changed:", isGoogleLoginSuccess);
+    if (user) {
+      const timeoutId = setTimeout(() => {
+        setIsGoogleLoginSuccess(
+          <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center">
+            Logged in with Google successfully.
+            {console.log("Google sign-in successful.")}
+            {console.log("Navigating to homepage after 5 seconds...")}
+          </div>
+        );
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [navigate, user]);
+
   return (
-    <div className="bg-[#c5c4c4] h-screen flex flex-col justify-center items-center">
+    <div className="bg-[#c5c4c4] w-screen h-screen flex flex-col justify-center items-center z-30 absolute">
       <Formik
         initialValues={{
           firstName: "",
@@ -45,9 +92,12 @@ const SignUp = () => {
             >
               {isSuccess && (
                 <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center">
-                  Data inserted successfully!
+                  Account created successfully. Please wait...
                 </div>
               )}
+
+              {/* //* Displaying google sign in success message */}
+              {isGoogleLoginSuccess}
 
               <div>
                 <h1 className="w-full font-bold text-2xl text-black">
@@ -84,6 +134,7 @@ const SignUp = () => {
                   </button>
                   <button
                     type="button"
+                    onClick={handleGoogleSignIn}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-[10px]  rounded-lg transition duration-300 w-[200px] h-[50px] flex justify-between items-center"
                   >
                     <span className="text-2xl bg-white rounded-sm">
