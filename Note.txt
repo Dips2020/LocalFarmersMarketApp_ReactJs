@@ -1,11 +1,18 @@
+inside react-app install⬇️
 cd react-app => {
     npm i
-    installed tailwind css
+    npm install -D tailwindcss postcss autoprefixer  
+    npx tailwindcss init -p  
     npm i yup
     npm install formik --save
-    react-icons -> (google icon)
+    npm i react-icons
     npm install firebase
     npm install react-router-dom
     npm i react-typed
+    npm i uuid
 }
 
+TO BEGIN:
+CHECK GIT BRANCH -> always check in terminal ----> git branch
+TO CREATE NEW BRANCH FOR EACH WORK ----> git branch newName
+TO SWITCH TO NEW BRANCH ----> git checkout newName

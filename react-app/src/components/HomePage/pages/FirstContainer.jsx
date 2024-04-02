@@ -53,12 +53,12 @@ const FirstContainer = () => {
   });
 
   return (
-    <div className="w-full h-[510px] mt-[92px] flex justify-between pt-2 border-b-2 border-gray-300">
+    <div className="w-full h-[510px] mt-[92px] flex justify-between pt-2 border-b-2 border-gray-300 mb-[4px]">
       <div className="w-[360px] h-[500px]  ml-[12px]">
         <div className="bg-[#81C408] w-[360px] h-[50px] flex justify-center items-center rounded-t-lg">
           <h1 className="text-2xl font-bold">All Local Products</h1>
         </div>
-        <div className="h-[425px] flex flex-col justify-around items-center text-[25px] font-semibold border-r-[1.5px] border-l-[1.5px] border-b-[1.5px] border-gray-500 bg-[#FBF9F4] rounded-b-lg">
+        <div className="p-4 h-[425px] flex flex-col justify-around items-center text-[25px] font-semibold border-r-[1.5px] border-l-[1.5px] border-b-[1.5px] border-gray-500 bg-[#FBF9F4] rounded-b-lg">
           <h1 className="cursor-pointer border-b-[1.5px] border-t-[1.5px] border-gray-500 w-[200px] flex justify-start gap-6 items-center text-left rounded-b-md hover:border-blue-600 rounded-t-md h-[60px]">
             <VscDebugBreakpointData /> Vegetables
           </h1>

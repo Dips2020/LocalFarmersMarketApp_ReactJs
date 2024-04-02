@@ -1,46 +1,35 @@
 import { Formik } from "formik";
 import TextField from "../userSignUp/TextField";
 import firstImg from "../../../assets/firstImg.png";
-import { getUserByEmailPassword } from "../../DatabaseOperation/DatabaseOperation";
-import { useNavigate } from "react-router-dom";
-//
 import { useContext } from "react";
 import { UserContext } from "../GoogleAuth/UserGoogleAuthentication";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { setUser } = useContext(UserContext); // Destructure setUser to update user state
+  const { handleFormSubmit } = useContext(UserContext); // Destructure setUser to update user state
+  const navigate = useNavigate(); // Import useNavigate
 
-  const handleFormSubmit = async (values) => {
-    console.log("Logging in with:", values);
+  const handleManualLogin = async (values) => {
     try {
-      const userExists = await getUserByEmailPassword(
-        values.email,
-        values.password
-      );
-      console.log("User exists:", userExists);
-      if (userExists) {
-        setUser({
-          email: values.email,
-          password: values.password,
-        });
-        console.log("Login successful !!. Please wait...");
+      const success = await handleFormSubmit(values);
+      if (success) {
         navigate("/");
       } else {
-        console.error("Invalid email or password");
+        console.error("Invalid credentials");
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Login Error:", error);
     }
   };
 
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleManualLogin}
     >
       {({ handleSubmit }) => (
-        <div className="bg-[#c5c4c4] h-screen w-screen flex justify-center items-center absolute z-30">
+        <div className="bg-[#c5c4c4] h-screen w-screen flex justify-center items-center absolute z-50">
           <div className="flex w-[80%] h-[550px] justify-center items-center drop-shadow-[0_35px_35px_rgba(0,0,0,0.8)]">
             <div className="h-[550px] w-[550px]">
               <img
@@ -72,6 +61,15 @@ const Login = () => {
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 w-[200px] h-[50px]"
               >
                 Login
+              </button>
+              <button
+                type="button"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-[10px]  rounded-lg transition duration-300 w-[200px] h-[50px] flex justify-between items-center"
+              >
+                <span className="text-2xl bg-white rounded-sm">
+                  <FcGoogle />
+                </span>
+                Continue with Google
               </button>
             </form>
           </div>

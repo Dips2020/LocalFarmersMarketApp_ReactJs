@@ -1,20 +1,30 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../../FormValidation/GoogleAuth/UserGoogleAuthentication";
-import { useContext, useState } from "react";
-import { useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { GiFarmer } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import pp from "../../../assets/profile/pp.jpg";
 
 const NavBar = () => {
-  const { user, logOut } = useContext(UserContext);
+  const { user, logOut, handleFormSubmit } = useContext(UserContext);
   const [dropMenu, setDropMenu] = useState(false);
   const navigate = useNavigate();
+
+  //TODO: =================================
+  useEffect(() => {
+    // Check if user is already logged in using localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      handleFormSubmit(JSON.parse(storedUser));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //handle sign out
   const handleSignOut = async () => {
     try {
-      await logOut();
+      await logOut().then(() => navigate("/"));
       window.location.reload(); // Refresh the page after successful logout
     } catch (error) {
       console.log("Logout errors:", error);
@@ -33,7 +43,7 @@ const NavBar = () => {
   });
 
   return (
-    <div className="flex justify-end items-center bg-[#81C408] h-[90px] space-x-2 pr-1 w-[1200px] fixed z-20">
+    <div className="flex justify-end items-center bg-[#81C408] h-[90px] space-x-2 pr-1 w-[1200px] fixed z-30">
       {/* Logo */}
       <div
         onClick={() => {
@@ -76,7 +86,7 @@ const NavBar = () => {
           <img
             ref={imgRef}
             onClick={() => setDropMenu(!dropMenu)}
-            src={user.photoURL}
+            src={user?.photoURL || pp}
             alt="User-Profile"
             className="h-[75px] w-[75px] object-cover border-2 border-white rounded-full cursor-pointer  hover:border-blue-600"
           />

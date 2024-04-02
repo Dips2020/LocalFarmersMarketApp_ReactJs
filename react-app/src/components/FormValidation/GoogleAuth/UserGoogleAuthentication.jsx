@@ -9,10 +9,17 @@ import {
 } from "firebase/auth";
 import { auth } from "../../config/DatabaseConnection";
 import PropTypes from "prop-types";
+import {
+  insertGoogleAuthData,
+  getUserByEmailPassword,
+  getUserByEmail,
+} from "../../DatabaseOperation/DatabaseOperation";
+// import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
-
 const UserGoogleAuthentication = ({ children }) => {
+  // const navigate = useNavigate();
+
   //* login in with pop up or redirect ------------------------
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
@@ -22,26 +29,91 @@ const UserGoogleAuthentication = ({ children }) => {
 
   //* running only once when the components mounts --> useState and useEffect for checking user authenticated or not ------------------------
   const [user, setUser] = useState({});
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
         console.log("Current user: ", currentUser);
+        // If user is newly authenticated (not just user object exists), insert their displayName and email into Realtime Database
+        if (currentUser.email && currentUser.displayName) {
+          insertGoogleAuthData(
+            currentUser.uid,
+            currentUser.email,
+            currentUser.displayName
+          );
+        }
+      } else {
+        setUser(null); // Clear user data if not authenticated
       }
     });
+
+    // // Check if user is already logged in using localStorage
+    // const storedUser = localStorage.getItem("user");
+    // if (storedUser) {
+    //   setUser(JSON.parse(storedUser));
+    // }
+
     return () => {
       unsubscribe();
     };
   }, []);
 
   //* logout part ------------------------
-  const logOut = () => {
-    // signOut(auth);
-    signOut(auth).then(() => setUser(null)); // Reset user state to null on logout
+  const logOut = async () => {
+    await signOut(auth).then(() => setUser(null));
+    localStorage.removeItem("user");
+  };
+
+  //* Login.jsx part ------------------- manual Login
+  const handleFormSubmit = async (values) => {
+    console.log("Logging in with:", values);
+    try {
+      const userExists = await getUserByEmailPassword(
+        values.email,
+        values.password
+      );
+      console.log("User exists:", userExists);
+      if (userExists) {
+        setUser({
+          email: values.email,
+          password: values.password,
+        });
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: values.email,
+            password: values.password,
+          })
+        );
+        console.log("Login successful !!. Please wait...");
+        // navigate("/");
+        return true; // Return true if login is successful
+      } else {
+        // Check if user exists with the provided email
+        const userWithEmailExists = await getUserByEmail(values.email);
+        if (userWithEmailExists) {
+          console.error("Invalid password");
+        } else {
+          console.error("Invalid email");
+        }
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+    return false; // Return false if login fails
   };
 
   return (
-    <UserContext.Provider value={{ googleSignIn, user, logOut, setUser }}>
+    <UserContext.Provider
+      value={{
+        googleSignIn,
+        user,
+        logOut,
+        setUser,
+        handleFormSubmit,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

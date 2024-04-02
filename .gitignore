@@ -1,0 +1,9 @@
+# Object file
+*.o
+
+# Ada Library Information
+*.ali
+desktop.ini
+react-app/package-lock.json
+react-app/package.json
+.vscode/settings.json

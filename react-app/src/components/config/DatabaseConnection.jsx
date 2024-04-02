@@ -2,6 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, update, onValue, get } from "firebase/database";
 import { getAuth } from "firebase/auth"; // adding google authentication
 
+//* for uploading image from UserProduct.jsx
+import { getStorage } from "firebase/storage"; // to store img
+
 const firebaseConfig = {
   apiKey: "AIzaSyB3BGS6xGLaVF9UVxSelStdS26SQ-NUoF0",
   authDomain: "agronomy-emporium-af14b.firebaseapp.com",
@@ -18,4 +21,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
-export { database, ref, set, update, onValue, auth, get };
+//* for uploading image from UserProduct.jsx
+const imgDB = getStorage(app);
+
+export { database, ref, set, update, onValue, auth, get, imgDB };

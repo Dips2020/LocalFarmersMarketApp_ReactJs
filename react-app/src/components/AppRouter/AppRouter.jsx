@@ -9,6 +9,7 @@ import BlogPage from "../HomePage/pages/BlogPage";
 import Profile from "../HomePage/userProfile/Profile";
 import NavBar from "../HomePage/Navbar/NavBar";
 import UserProduct from "../HomePage/ProductPage/UserProduct";
+import Footer from "../HomePage/pages/Footer";
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
       <UserGoogleAuthentication>
         <section className="w-full h-auto bg-orange-200 flex flex-col justify-center items-center">
           <div className="w-[1200px] relative flex flex-col items-center">
+            {/* Navbar --------------------- */}
             <NavBar />
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
@@ -28,10 +30,8 @@ const AppRouter = () => {
               <Route path="/yourProduct" element={<UserProduct />}></Route>
             </Routes>
           </div>
-          {/* footer */}
-          <div className="bg-black w-[1200px] h-[150px]">
-            <h1 className="text-white text-3xl">Footer</h1>
-          </div>
+          {/* footer -------------------- */}
+          <Footer />
         </section>
       </UserGoogleAuthentication>
     </Router>

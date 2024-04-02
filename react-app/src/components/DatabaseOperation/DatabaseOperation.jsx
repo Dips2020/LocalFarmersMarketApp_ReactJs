@@ -12,6 +12,26 @@ export const insertUserData = (data) => {
     });
 };
 
+// Function to insert Google authentication data into the database
+export const insertGoogleAuthData = (uid, email, displayName) => {
+  const userData = {
+    email: email,
+    displayName: displayName,
+  };
+
+  // Define the path to the user's data node using their UID
+  const userRef = ref(database, "users/" + uid);
+
+  // Set the user data in the database under the user's UID node
+  set(userRef, userData)
+    .then(() => {
+      console.log("Google authentication data inserted successfully.");
+    })
+    .catch((error) => {
+      console.error("Error inserting Google authentication data:", error);
+    });
+};
+
 //? ------------------------ checking-email-for-create-account
 // *** Function to check if a user exists in the database with the same email
 export const getUserByEmail = async (email) => {
@@ -59,7 +79,7 @@ export const getUserByEmailPassword = async (email, password) => {
         console.log("User found:", userWithEmail);
         return true;
       } else {
-        console.log("User email found or invalid password");
+        console.log("User email not found or invalid password");
         return false;
       }
     } else {
