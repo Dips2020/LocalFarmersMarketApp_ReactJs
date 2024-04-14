@@ -15,5 +15,9 @@ const validationSchema = object({
     .required("Enter your password.")
     .min(5, "Minimum is 5 characters.")
     .max(30, "Maximum character is 30."),
+  // ProductName: string()
+  //   .required("Enter your product name.")
+  //   .min(5, "Minimum is 5 characters.")
+  //   .max(30, "Maximum character is 30."),
 });
 export default validationSchema;

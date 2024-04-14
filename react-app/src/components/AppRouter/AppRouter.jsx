@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "../FormValidation/userSignUp/SignUp";
 import Login from "../FormValidation/userLogin/Login";
@@ -10,23 +12,26 @@ import Profile from "../HomePage/userProfile/Profile";
 import NavBar from "../HomePage/Navbar/NavBar";
 import UserProduct from "../HomePage/ProductPage/UserProduct";
 import Footer from "../HomePage/pages/Footer";
+import Dashboard from "../HomePage/pages/Dashboard";
 
 const AppRouter = () => {
   return (
     <Router>
       <UserGoogleAuthentication>
-        <section className="w-full h-auto bg-orange-200 flex flex-col justify-center items-center">
+        <section className="w-full h-auto bg-[#036016] flex flex-col justify-center items-center">
           <div className="w-[1200px] relative flex flex-col items-center">
             {/* Navbar --------------------- */}
             <NavBar />
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
               <Route path="/userProfile" element={<Profile />}></Route>
+
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<PageNotFound />} />
+              <Route path="/dashboard" element={<Dashboard />}></Route>
               <Route path="/yourProduct" element={<UserProduct />}></Route>
             </Routes>
           </div>
