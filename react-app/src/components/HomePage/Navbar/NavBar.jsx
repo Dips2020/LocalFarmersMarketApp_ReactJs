@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import React from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../FormValidation/GoogleAuth/UserGoogleAuthentication";
 import { useContext, useState, useRef, useEffect } from "react";
@@ -43,7 +45,7 @@ const NavBar = () => {
   });
 
   return (
-    <div className="flex justify-end items-center bg-[#81C408] h-[90px] space-x-2 pr-1 w-[1200px] fixed z-30">
+    <div className="flex justify-end items-center border-b-2 border-white rounded-b-lg bg-[#036016] h-[90px] space-x-2 pr-1 w-[1200px] fixed z-30">
       {/* Logo */}
       <div
         onClick={() => {
@@ -54,19 +56,19 @@ const NavBar = () => {
         <GiFarmer />
       </div>
       <div>
-        <div className="flex h-[50px] justify-around items-center w-[375px]">
+        <div className="flex h-[50px] justify-around items-center w-[375px] text-[18px]">
           <Link to="/">
-            <button className="border-2 hover:border-blue-600 text-white font-semibold rounded-lg transition duration-300 w-[120px] h-[50px]">
+            <button className="border-2 hover:border-[#069E2D] hover:text-[#069E2D] text-white font-semibold rounded-lg transition-all duration-300 w-[120px] h-[50px]">
               Home
             </button>
           </Link>
           <Link to="/contact">
-            <button className="border-2 hover:border-blue-600 text-white font-semibold rounded-lg transition duration-300 w-[120px] h-[50px]">
+            <button className="border-2 hover:border-[#069E2D] hover:text-[#069E2D] text-white font-semibold rounded-lg transition duration-300 w-[120px] h-[50px]">
               Contact Us
             </button>
           </Link>
           <Link to="/blog">
-            <button className="border-2 hover:border-blue-600 text-white font-semibold rounded-lg transition duration-300 w-[120px] h-[50px]">
+            <button className="border-2 hover:border-[#069E2D] hover:text-[#069E2D] text-white font-semibold rounded-lg transition duration-300 w-[120px] h-[50px]">
               Blog
             </button>
           </Link>
@@ -77,9 +79,9 @@ const NavBar = () => {
           type="text"
           name="search"
           placeholder="What do you need?"
-          className="h-full w-full rounded-lg pl-2 outline-none border-[#FBF9F4] bg-[#FBF9F4] hover:border-blue-700 border-[2px] transition duration-300"
+          className="h-full w-full rounded-lg pl-2 outline-none border-[#FBF9F4] bg-[#FBF9F4] hover:border-[#069E2D] border-[2px] transition duration-300"
         />
-        <BiSearchAlt2 className="absolute right-2 text-2xl text-[#81C408]" />
+        <BiSearchAlt2 className="absolute right-2 text-2xl text-[#036016]" />
       </div>
       {user?.email ? (
         <div className="w-[100px] flex justify-around items-center">
@@ -88,20 +90,32 @@ const NavBar = () => {
             onClick={() => setDropMenu(!dropMenu)}
             src={user?.photoURL || pp}
             alt="User-Profile"
-            className="h-[75px] w-[75px] object-cover border-2 border-white rounded-full cursor-pointer  hover:border-blue-600"
+            className="h-[75px] w-[75px] object-cover border-2 border-white rounded-full cursor-pointer  hover:border-[#069E2D] flex justify-center items-center"
           />
           {dropMenu && (
-            <div className="bg-white w-[150px] h-[150px] shadow-lg flex flex-col justify-center items-center absolute top-[85px] right-[3px] rounded-md z-10">
+            <div className="bg-white w-[150px] h-[190px] shadow-lg flex flex-col justify-center items-center absolute top-[85px] right-[3px] rounded-md z-10">
               <ul
                 ref={menuRef}
                 className=" text-[16px] font-bold flex flex-col justify-center items-center h-full w-full space-y-1"
               >
-                <li className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500">
-                  <Link to="/userProfile">Profile</Link>
-                </li>
-                <li className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500">
-                  <Link to="/yourProduct">Your Products</Link>
-                </li>
+                <Link
+                  to="userProfile"
+                  className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="dashboard"
+                  className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="yourProduct"
+                  className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
+                >
+                  Your Products
+                </Link>
                 <li
                   onClick={handleSignOut}
                   className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
@@ -116,12 +130,12 @@ const NavBar = () => {
         <div className="w-[310px] flex justify-around items-center">
           {/* Display Sign Up and Login buttons only if user is not logged in */}
           <Link to="/login">
-            <button className="border-2 hover:border-blue-600 text-white font-semibold rounded-lg transition duration-300 w-[150px] h-[50px]">
+            <button className="border-2 border-white hover:border-[#ff4fad] text-white font-semibold rounded-lg transition duration-300 w-[150px] h-[50px] text-[18px]">
               Login
             </button>
           </Link>
           <Link to="/signUp">
-            <button className="bg-[#FBF9F4] border-[#FBF9F4] border-2 hover:border-blue-600 text-black font-semibold py-2 px-4 rounded-lg transition duration-300 w-[150px] h-[50px]">
+            <button className="bg-white border-white border-2 hover:border-[#ff4fad] text-black font-semibold py-2 px-4 rounded-lg transition duration-300 w-[150px] h-[50px] text-[18px]">
               Sign Up
             </button>
           </Link>

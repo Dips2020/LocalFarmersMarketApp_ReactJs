@@ -1,19 +1,27 @@
+//? Test-2 - Firebase Database
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, update, onValue, get } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  update,
+  onValue,
+  get,
+  remove,
+} from "firebase/database";
 import { getAuth } from "firebase/auth"; // adding google authentication
-
 //* for uploading image from UserProduct.jsx
 import { getStorage } from "firebase/storage"; // to store img
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB3BGS6xGLaVF9UVxSelStdS26SQ-NUoF0",
-  authDomain: "agronomy-emporium-af14b.firebaseapp.com",
+  apiKey: "AIzaSyCLsulx62VyARmsJ-DvrRfCLLw0z855nTc",
+  authDomain: "test-2-69499.firebaseapp.com",
   databaseURL:
-    "https://agronomy-emporium-af14b-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  projectId: "agronomy-emporium-af14b",
-  storageBucket: "agronomy-emporium-af14b.appspot.com",
-  messagingSenderId: "415141290388",
-  appId: "1:415141290388:web:41f38209dc3b46b7e82f81",
+    "https://test-2-69499-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "test-2-69499",
+  storageBucket: "test-2-69499.appspot.com",
+  messagingSenderId: "709094388277",
+  appId: "1:709094388277:web:998177e01d01ffdb8db77c",
 };
 
 // Initialize Firebase
@@ -24,4 +32,4 @@ const auth = getAuth(app);
 //* for uploading image from UserProduct.jsx
 const imgDB = getStorage(app);
 
-export { database, ref, set, update, onValue, auth, get, imgDB };
+export { database, ref, set, update, onValue, auth, get, imgDB, remove };

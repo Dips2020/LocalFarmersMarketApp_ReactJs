@@ -13,6 +13,7 @@ import { getUserByEmail } from "../../DatabaseOperation/DatabaseOperation";
 const SignUp = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isGoogleLoginSuccess, setIsGoogleLoginSuccess] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
   const navigate = useNavigate();
 
   const handleFormSubmit = async (values, { resetForm }) => {
@@ -23,6 +24,12 @@ const SignUp = () => {
       if (userExists) {
         console.error(
           "User with this email address already exists.\nPlease try with different email address."
+        );
+        setEmailExists(
+          <div className="absolute bottom-0 left-0 right-0 bg-red-500 text-white text-[12px] font-bold py-[4px] text-center z-10">
+            User with this email address already exists. Please try with
+            different email address.
+          </div>
         );
         return;
       }
@@ -54,7 +61,7 @@ const SignUp = () => {
     if (user) {
       const timeoutId = setTimeout(() => {
         setIsGoogleLoginSuccess(
-          <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center">
+          <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center z-20">
             Logged in with Google successfully.
             {console.log("Google sign-in successful.")}
             {console.log("Navigating to homepage after 5 seconds...")}
@@ -69,7 +76,7 @@ const SignUp = () => {
   }, [navigate, user]);
 
   return (
-    <div className="bg-[#c5c4c4] w-screen h-screen flex flex-col justify-center items-center z-50 absolute">
+    <div className="bg-black bg-opacity-[70%] w-screen h-screen flex flex-col justify-center items-center z-50 absolute">
       <Formik
         initialValues={{
           firstName: "",
@@ -81,23 +88,24 @@ const SignUp = () => {
         onSubmit={handleFormSubmit}
       >
         {({ handleSubmit }) => (
-          <div className="flex w-[80%] justify-center items-center drop-shadow-[0_35px_35px_rgba(0,0,0,0.8)]">
+          <div className="flex w-[1200px] justify-center items-center shadow-md">
             <form
               autoComplete="off"
               onSubmit={(event) => {
                 event.preventDefault();
                 handleSubmit();
               }}
-              className="bg-white h-[550px] w-[550px] flex flex-col justify-center items-center space-y-5 rounded-l relative"
+              className="bg-white h-[550px] w-[50%] flex flex-col justify-center items-center space-y-5 rounded-l relative"
             >
               {isSuccess && (
-                <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center">
+                <div className="absolute bottom-0 left-0 right-0 bg-green-500 text-white text-[12px] font-bold py-[4px] text-center z-20">
                   Account created successfully. Please wait...
                 </div>
               )}
 
               {/* //* Displaying google sign in success message */}
               {isGoogleLoginSuccess}
+              {emailExists}
 
               <div>
                 <h1 className="w-full font-bold text-2xl text-black">
@@ -153,7 +161,7 @@ const SignUp = () => {
                 </div>
               </div>
             </form>
-            <div className="h-[550px] w-[550px]">
+            <div className="h-[550px] w-[50%]">
               <img
                 src={firstImg}
                 alt="First img"

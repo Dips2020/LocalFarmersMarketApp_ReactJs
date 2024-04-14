@@ -1,4 +1,4 @@
-import { set, database, ref, get } from "../config/DatabaseConnection"; // Importing necessary Firebase functions
+import { set, database, ref, get, update } from "../config/DatabaseConnection"; // Importing necessary Firebase functions
 
 //? ------------------------ inserting-part
 export const insertUserData = (data) => {
@@ -12,24 +12,58 @@ export const insertUserData = (data) => {
     });
 };
 
-// Function to insert Google authentication data into the database
-export const insertGoogleAuthData = (uid, email, displayName) => {
-  const userData = {
-    email: email,
-    displayName: displayName,
-  };
+//? ================= Function to insert Google authentication data into the database
+export const insertGoogleAuthData = (
+  uid,
+  email,
+  displayName,
+  imgUrl,
+  productNames = null,
+  price = null,
+  category = null
+) => {
+  // If productNames is provided, it means we are adding product details for the user
+  if (productNames !== null) {
+    // Define product data
+    const productData = {
+      product_Name: productNames,
+      product_Url: imgUrl,
+      product_Price: price,
+      product_Category: category,
+    };
 
-  // Define the path to the user's data node using their UID
-  const userRef = ref(database, "users/" + uid);
+    // Define the path to the user's ProductDetails node using their UID
+    const productRef = ref(database, `ProductDetails/${uid}/${productNames}`);
 
-  // Set the user data in the database under the user's UID node
-  set(userRef, userData)
-    .then(() => {
-      console.log("Google authentication data inserted successfully.");
-    })
-    .catch((error) => {
-      console.error("Error inserting Google authentication data:", error);
-    });
+    // Update product data under the specific productNames key
+    update(productRef, productData)
+      .then(() => {
+        console.log("Product data inserted successfully.");
+      })
+      .catch((error) => {
+        console.error("Error inserting product data:", error);
+      });
+  } else {
+    // If productNames is not provided, it means we are storing user authentication data
+
+    // Define user data
+    const userData = {
+      email: email,
+      displayName: displayName,
+    };
+
+    // Define the path to the user's data node using their UID
+    const userRef = ref(database, `users/${uid}`);
+
+    // Set the user data in the database under the user's UID node
+    set(userRef, userData)
+      .then(() => {
+        console.log("Google authentication data inserted successfully.");
+      })
+      .catch((error) => {
+        console.error("Error inserting Google authentication data:", error);
+      });
+  }
 };
 
 //? ------------------------ checking-email-for-create-account
