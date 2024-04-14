@@ -13,6 +13,7 @@ import NavBar from "../HomePage/Navbar/NavBar";
 import UserProduct from "../HomePage/ProductPage/UserProduct";
 import Footer from "../HomePage/pages/Footer";
 import Dashboard from "../HomePage/pages/Dashboard";
+import Admin from "../HomePage/pages/Admin";
 
 const AppRouter = () => {
   return (
@@ -25,7 +26,7 @@ const AppRouter = () => {
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
               <Route path="/userProfile" element={<Profile />}></Route>
-
+              <Route path="/admin-only-developers" element={<Admin />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/signUp" element={<SignUp />} />
