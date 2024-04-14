@@ -17,6 +17,7 @@ export const insertGoogleAuthData = (
   uid,
   email,
   displayName,
+  role,
   imgUrl,
   productNames = null,
   price = null,
@@ -50,6 +51,7 @@ export const insertGoogleAuthData = (
     const userData = {
       email: email,
       displayName: displayName,
+      role: role,
     };
 
     // Define the path to the user's data node using their UID
@@ -63,6 +65,23 @@ export const insertGoogleAuthData = (
       .catch((error) => {
         console.error("Error inserting Google authentication data:", error);
       });
+  }
+};
+
+//? ================== get user Role
+export const getUserRole = async (uid) => {
+  try {
+    const userRef = ref(database, `users/${uid}`);
+    const snapshot = await get(userRef);
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      return userData.role;
+    } else {
+      throw new Error("User data not found");
+    }
+  } catch (error) {
+    console.error("Error fetching user role:", error);
+    throw error;
   }
 };
 

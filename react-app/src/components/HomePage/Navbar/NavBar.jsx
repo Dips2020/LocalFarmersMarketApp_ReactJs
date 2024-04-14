@@ -7,6 +7,7 @@ import { GiFarmer } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import pp from "../../../assets/profile/pp.jpg";
+import { getUserRole } from "../../DatabaseOperation/DatabaseOperation";
 
 const NavBar = () => {
   const { user, logOut, handleFormSubmit } = useContext(UserContext);
@@ -20,8 +21,23 @@ const NavBar = () => {
     if (storedUser) {
       handleFormSubmit(JSON.parse(storedUser));
     }
+    // Fetch user's role if user is authenticated
+    if (user && user.uid) {
+      fetchUserRole();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
+
+  // for user Role fetching to verify user's role Farmer or Customer
+  const [userRole, setUserRole] = useState(null); // State to store user's role
+  const fetchUserRole = async () => {
+    try {
+      const role = await getUserRole(user.uid); // Fetch user's role from the database
+      setUserRole(role);
+    } catch (error) {
+      console.error("Error fetching user role:", error);
+    }
+  };
 
   //handle sign out
   const handleSignOut = async () => {
@@ -93,10 +109,10 @@ const NavBar = () => {
             className="h-[75px] w-[75px] object-cover border-2 border-white rounded-full cursor-pointer  hover:border-[#069E2D] flex justify-center items-center"
           />
           {dropMenu && (
-            <div className="bg-white w-[150px] h-[190px] shadow-lg flex flex-col justify-center items-center absolute top-[85px] right-[3px] rounded-md z-10">
+            <div className="bg-white w-[150px] h-auto shadow-lg flex flex-col justify-center items-center absolute top-[85px] right-[3px] rounded-md z-10 p-2">
               <ul
                 ref={menuRef}
-                className=" text-[16px] font-bold flex flex-col justify-center items-center h-full w-full space-y-1"
+                className=" text-[16px] font-bold flex flex-col justify-center items-center h-full w-full gap-1"
               >
                 <Link
                   to="userProfile"
@@ -104,18 +120,22 @@ const NavBar = () => {
                 >
                   Profile
                 </Link>
-                <Link
-                  to="dashboard"
-                  className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="yourProduct"
-                  className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
-                >
-                  Your Products
-                </Link>
+                {userRole === "Farmer" && (
+                  <>
+                    <Link
+                      to="dashboard"
+                      className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="yourProduct"
+                      className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"
+                    >
+                      Your Products
+                    </Link>
+                  </>
+                )}
                 <li
                   onClick={handleSignOut}
                   className="cursor-pointer h-[40px] w-[90%] flex justify-center items-center rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500"

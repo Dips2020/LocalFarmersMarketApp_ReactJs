@@ -16,3 +16,6 @@ TO BEGIN:
 CHECK GIT BRANCH -> always check in terminal ----> git branch
 TO CREATE NEW BRANCH FOR EACH WORK ----> git branch newName
 TO SWITCH TO NEW BRANCH ----> git checkout newName
+
+
+video link: https://videos.pexels.com/video-files/5192322/5192322-sd_640_360_30fps.mp4
