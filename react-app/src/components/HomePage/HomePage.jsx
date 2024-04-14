@@ -65,7 +65,7 @@ const HomePage = () => {
       </div>
 
       {showRoleSelection && (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-4 rounded-lg w-[300px] h-[200px] flex flex-col justify-evenly items-center">
             <h2 className="text-[12px]">Please !</h2>
             <h1 className="text-2xl font-bold mb-4 text-red-700">
