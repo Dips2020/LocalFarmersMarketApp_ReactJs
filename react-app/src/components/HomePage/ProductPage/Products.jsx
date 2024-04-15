@@ -62,7 +62,7 @@ const Products = () => {
   };
 
   return (
-    <div className="h-auto w-[1200px] bg-blue-200 text-center z-40 flex justify-center items-center flex-wrap rounded-t-lg space-y-1">
+    <div className="h-auto w-[1200px] bg-blue-200 text-center flex justify-center items-center flex-wrap rounded-t-lg space-y-1">
       {Object.entries(userProducts).map(([uid, products], index) => (
         <div
           key={index}
