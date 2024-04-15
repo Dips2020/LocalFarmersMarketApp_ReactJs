@@ -13,13 +13,25 @@ export const insertUserData = (data) => {
 };
 
 //? ================= Function to insert Google authentication data into the database
-export const insertGoogleAuthData = (uid, email, displayName, role) => {
+export const insertGoogleAuthData = (
+  uid,
+  email,
+  displayName,
+  role,
+  storeName
+) => {
   const userData = {
     email: email,
     displayName: displayName,
     role: role,
+    storeName: storeName,
   };
-
+  // Conditionally add storeName to userData if role is Farmer
+  if (role === "Farmer") {
+    userData.storeName = storeName;
+  } else {
+    userData.storeName = null;
+  }
   // Define the path to the user's data node using their UID
   const userRef = ref(database, `users/${uid}`);
 
