@@ -14,7 +14,7 @@ import {
 } from "firebase/storage";
 import { MdDelete } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
-import { insertGoogleAuthData } from "../../DatabaseOperation/DatabaseOperation";
+import { insertUserProduct } from "../../DatabaseOperation/DatabaseOperation";
 import { useContext } from "react";
 import { UserContext } from "../../FormValidation/GoogleAuth/UserGoogleAuthentication";
 import { TbCategoryFilled } from "react-icons/tb";
@@ -45,7 +45,7 @@ const UserProduct = () => {
             console.log("Uploaded image with UUID:", uuid);
             // Insert product data into the Realtime Database along with the image URL
             if (user.uid) {
-              insertGoogleAuthData(
+              insertUserProduct(
                 user.uid,
                 user.email,
                 user.displayName,
