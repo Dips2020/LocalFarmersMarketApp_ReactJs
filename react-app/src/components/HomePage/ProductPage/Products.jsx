@@ -7,6 +7,7 @@ import { TbCategoryFilled } from "react-icons/tb";
 
 const Products = () => {
   const [userProducts, setUserProducts] = useState({});
+  const [storeNames, setStoreNames] = useState({}); // for fetching storeName
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -31,6 +32,35 @@ const Products = () => {
     fetchAllProducts();
   }, []);
 
+  useEffect(() => {
+    const fetchStoreNames = async () => {
+      const newStoreNames = {};
+      for (const uid in userProducts) {
+        newStoreNames[uid] = await fetchStoreName(uid);
+      }
+      setStoreNames(newStoreNames);
+    };
+
+    fetchStoreNames();
+  }, [userProducts]);
+
+  const fetchStoreName = async (uid) => {
+    try {
+      const userRef = ref(database, `users/${uid}`);
+      const snapshot = await get(userRef);
+      const userData = snapshot.val();
+
+      if (userData) {
+        return userData.storeName;
+      } else {
+        return "Unknown";
+      }
+    } catch (error) {
+      console.error("Error fetching store name:", error);
+      return "Unknown";
+    }
+  };
+
   return (
     <div className="h-auto w-[1200px] bg-blue-200 text-center z-40 flex justify-center items-center flex-wrap rounded-t-lg space-y-1">
       {Object.entries(userProducts).map(([uid, products], index) => (
@@ -42,7 +72,7 @@ const Products = () => {
             <h1 className="text-[14px] flex justify-center items-center gap-2 h-[40px] border-t-2 border-gray-400 border-l-2 rounded-lg p-2">
               Farmer:
               <span className="font-bold text-[20px] border-gray-400">
-                {uid}
+                {storeNames[uid] || "Loading..."}
               </span>
             </h1>
           </div>
