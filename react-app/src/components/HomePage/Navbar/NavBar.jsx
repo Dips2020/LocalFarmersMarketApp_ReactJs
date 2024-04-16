@@ -15,18 +15,25 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   //TODO: =================================
-  useEffect(() => {
+  const manualLogin = () => {
     // Check if user is already logged in using localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       handleFormSubmit(JSON.parse(storedUser));
     }
+  };
+
+  useEffect(() => {
+    manualLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  setTimeout(() => {
     // Fetch user's role if user is authenticated
     if (user && user.uid) {
       fetchUserRole();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, 1000);
 
   // for user Role fetching to verify user's role Farmer or Customer
   const [userRole, setUserRole] = useState(null); // State to store user's role
@@ -42,7 +49,8 @@ const NavBar = () => {
   //handle sign out
   const handleSignOut = async () => {
     try {
-      await logOut().then(() => navigate("/"));
+      // await logOut().then(() => navigate("/"));
+      await logOut();
       window.location.reload(); // Refresh the page after successful logout
     } catch (error) {
       console.log("Logout errors:", error);
