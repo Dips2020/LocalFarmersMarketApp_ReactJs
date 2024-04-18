@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import userLoginSchemas from "../validation_schemas/userSignInSchemas";
 import TextField from "./TextField";
 import { FcGoogle } from "react-icons/fc";
-import firstImg from "../../../assets/firstImg.png";
 import { insertUserData } from "../../DatabaseOperation/DatabaseOperation";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -162,11 +161,13 @@ const SignUp = () => {
               </div>
             </form>
             <div className="h-[550px] w-[50%]">
-              <img
-                src={firstImg}
-                alt="First img"
+              <video
+                src="https://videos.pexels.com/video-files/4184080/4184080-hd_1920_1080_25fps.mp4"
                 className="object-cover w-full h-full rounded-r"
-              />
+                autoPlay
+                muted
+                loop
+              ></video>
             </div>
           </div>
         )}

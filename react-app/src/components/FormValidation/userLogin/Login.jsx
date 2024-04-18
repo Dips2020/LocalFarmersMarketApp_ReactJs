@@ -2,7 +2,6 @@
 import React from "react";
 import { Formik } from "formik";
 import TextField from "../userSignUp/TextField";
-import firstImg from "../../../assets/firstImg.png";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../GoogleAuth/UserGoogleAuthentication";
 import { FcGoogle } from "react-icons/fc";
@@ -71,11 +70,13 @@ const Login = () => {
         <div className="bg-black bg-opacity-[70%] h-screen w-screen flex justify-center items-center absolute z-50">
           <div className="flex w-[1200px] h-[550px] justify-center items-center shadow-md">
             <div className="h-[550px] w-[50%]">
-              <img
-                src={firstImg}
-                alt="First img"
-                className="object-cover w-full h-full rounded-l-lg"
-              />
+              <video
+                src="https://videos.pexels.com/video-files/7031954/7031954-uhd_3840_2160_24fps.mp4"
+                className="object-cover w-full h-full rounded-r"
+                autoPlay
+                muted
+                loop
+              ></video>
             </div>
 
             <form
