@@ -131,18 +131,18 @@ const UserProduct = () => {
   }, [user.uid]);
 
   return (
-    <div className="mt-[92px] w-[1200px] h-auto">
+    <div className="mt-[100px] w-[1200px] h-auto bg-[#c5c1c1] rounded-t-md">
       {/* img upload */}
       <div className="flex flex-col w-full h-auto">
-        <div className="flex w-full h-auto justify-evenly items-center flex-wrap">
+        <div className="flex w-full h-auto justify-between items-center flex-wrap gap-3">
           {imgUrl.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col justify-evenly items-center h-auto bg-purple-300 w-[384px] rounded-lg m-2 relative pt-8 gap-8"
+              className="flex flex-col flex-wrap w-[280px] h-auto justify-center gap-4 items-center bg-[#e0dcdc] rounded-lg p-4 relative"
             >
               <img
                 src={item.url}
-                className="object-contain h-[300px] w-[300px] rounded-lg transition-transform duration-500 ease-in-out transform hover:scale-110"
+                className="object-contain h-[200px] w-[200px] rounded-lg mb-2 cursor-pointer transition-transform duration-500 ease-in-out transform hover:scale-110"
               />
               <div
                 className="absolute text-2xl top-1 right-2 hover:cursor-pointer"
@@ -155,7 +155,7 @@ const UserProduct = () => {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col justify-center items-center text-center w-[90%] h-[100px] bg-red-300 mb-4">
+              <div className="flex flex-col items-start justify-start h-auto w-full gap-2">
                 <h1 className="font-bold text-2xl">{productNames[index]}</h1>
                 <p className="text-[14px] flex justify-center items-center gap-2">
                   Price:
@@ -171,12 +171,14 @@ const UserProduct = () => {
             </div>
           ))}
           {/* ------------------------- */}
-          <div className="flex flex-col space-y-2 justify-evenly items-center w-[384px] h-auto rounded-lg bg-orange-200 m-2 pt-4 pb-4">
+          <div className="flex flex-col space-y-2 justify-evenly items-center w-[280px] h-auto rounded-lg bg-[#d1a6a6] pt-2 pb-2 mb-2">
             <label
               htmlFor="file-upload"
-              className="bg-gray-200 w-[300px] h-[300px] flex justify-center items-center cursor-pointer rounded-lg"
+              className="bg-gray-200 h-[200px] w-[200px] flex justify-center items-center cursor-pointer rounded-lg"
             >
-              <span className="text-black font-bold">Upload Product Image</span>
+              <span className="text-black font-semibold text-[14px]">
+                Upload Product Image
+              </span>
               <input
                 type="file"
                 onChange={(e) => setImg(e.target.files[0])}
@@ -193,10 +195,10 @@ const UserProduct = () => {
                 updatedNames[imgUrl.length] = e.target.value;
                 setProductNames(updatedNames);
               }}
-              className="w-[300px] h-[40px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
+              className="w-[200px] h-[30px] text-[12px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
             />
-            <div className="w-[300px] h-[40px] flex justify-between items-center">
-              <label className="font-semibold text-[18px]">Price:</label>
+            <div className="w-[200px] h-[30px] flex justify-between items-center">
+              <label className="font-semibold text-[14px]">Price:</label>
               <input
                 type="text"
                 placeholder="Enter Price $"
@@ -206,11 +208,11 @@ const UserProduct = () => {
                   updatePrice[imgUrl.length] = e.target.value;
                   setPrice(updatePrice);
                 }}
-                className="w-[70%] h-[40px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
+                className="w-[70%] h-[30px] text-[12px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
               />
             </div>
-            <div className="w-[300px] h-[40px] flex justify-between items-center">
-              <span className="text-[20px]">
+            <div className="w-[200px] h-[30px] flex justify-between items-center">
+              <span className="text-[16px]">
                 <TbCategoryFilled />
               </span>
               <input
@@ -222,13 +224,13 @@ const UserProduct = () => {
                   updateCategory[imgUrl.length] = e.target.value;
                   setCategory(updateCategory);
                 }}
-                className="w-[70%] h-[40px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
+                className="w-[70%] h-[30px] text-[12px] bg-white p-2 rounded-md outline-none border-2 border-white hover:border-[#069E2D]"
               />
             </div>
 
             <button
               onClick={handleUpload}
-              className="bg-[#069E2D] hover:bg-[#58ae34] text-[18px] text-white font-semibold py-2 px-4 rounded-lg transition duration-300 w-[200px] h-[50px]"
+              className="flex justify-center items-center w-[200px] h-[40px] bg-[#069E2D] hover:bg-[#58ae34] text-[14px] text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
             >
               Add Product
             </button>

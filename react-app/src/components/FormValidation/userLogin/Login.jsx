@@ -71,7 +71,8 @@ const Login = () => {
           <div className="flex w-[1200px] h-[550px] justify-center items-center shadow-md">
             <div className="h-[550px] w-[50%]">
               <video
-                src="https://videos.pexels.com/video-files/7031954/7031954-uhd_3840_2160_24fps.mp4"
+                // src="https://videos.pexels.com/video-files/7031954/7031954-uhd_3840_2160_24fps.mp4"
+                src="https://videos.pexels.com/video-files/2806063/2806063-hd_1080_1920_30fps.mp4"
                 className="object-cover w-full h-full rounded-r"
                 autoPlay
                 muted

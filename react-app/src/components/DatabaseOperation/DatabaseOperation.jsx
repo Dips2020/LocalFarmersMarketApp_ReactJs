@@ -1,9 +1,11 @@
 import { set, database, ref, get, update } from "../config/DatabaseConnection"; // Importing necessary Firebase functions
+import { v4 } from "uuid";
 
 //? ------------------------ inserting-part
 export const insertUserData = (data) => {
+  const manualUserId = v4();
   console.log("Inserting new user details to DB.");
-  set(ref(database, "users/" + Date.now()), data)
+  set(ref(database, `users/${manualUserId}`), data)
     .then(() => {
       console.log("Successfully inserted to DB.");
     })

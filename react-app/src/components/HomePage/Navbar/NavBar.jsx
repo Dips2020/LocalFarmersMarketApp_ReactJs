@@ -49,8 +49,8 @@ const NavBar = () => {
   //handle sign out
   const handleSignOut = async () => {
     try {
-      // await logOut().then(() => navigate("/"));
-      await logOut();
+      await logOut().then(() => navigate("/"));
+      // await logOut();
       window.location.reload(); // Refresh the page after successful logout
     } catch (error) {
       console.log("Logout errors:", error);
