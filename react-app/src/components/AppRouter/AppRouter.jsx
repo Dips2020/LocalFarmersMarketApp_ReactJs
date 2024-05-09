@@ -14,6 +14,7 @@ import UserProduct from "../HomePage/ProductPage/UserProduct";
 import Footer from "../HomePage/pages/Footer";
 import Dashboard from "../HomePage/pages/Dashboard";
 import Admin from "../HomePage/pages/Admin";
+import AddToCart from "../HomePage/pages/AddToCart/AddToCart";
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
             <NavBar />
             <Routes>
               <Route path="/" element={<HomePage />}></Route>
+              <Route path="/addToCart" element={<AddToCart />}></Route>
               <Route path="/userProfile" element={<Profile />}></Route>
               <Route path="/admin-only-developers" element={<Admin />} />
               <Route path="/contact" element={<Contact />} />

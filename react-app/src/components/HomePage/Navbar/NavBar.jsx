@@ -8,6 +8,7 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import pp from "../../../assets/profile/pp.jpg";
 import { getUserRole } from "../../DatabaseOperation/DatabaseOperation";
+import { FaShoppingCart } from "react-icons/fa";
 
 const NavBar = () => {
   const { user, logOut, handleFormSubmit } = useContext(UserContext);
@@ -108,7 +109,10 @@ const NavBar = () => {
         <BiSearchAlt2 className="absolute right-2 text-2xl text-[#036016]" />
       </div>
       {user?.email ? (
-        <div className="w-[100px] flex justify-around items-center">
+        <div className="w-[150px] flex justify-around items-center">
+          <Link to="addToCart">
+            <FaShoppingCart className="h-[50px] w-[50px] cursor-pointer text-white" />
+          </Link>
           <img
             ref={imgRef}
             onClick={() => setDropMenu(!dropMenu)}
