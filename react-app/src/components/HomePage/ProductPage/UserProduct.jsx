@@ -47,8 +47,6 @@ const UserProduct = () => {
             if (user.uid) {
               insertUserProduct(
                 user.uid,
-                user.email,
-                user.displayName,
                 url,
                 productName,
                 productPrice,
