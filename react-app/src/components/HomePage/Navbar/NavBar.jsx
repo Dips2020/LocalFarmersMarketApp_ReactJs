@@ -7,15 +7,15 @@ import { GiFarmer } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import pp from "../../../assets/profile/pp.jpg";
-import { getUserRole } from "../../DatabaseOperation/DatabaseOperation";
 import { FaShoppingCart } from "react-icons/fa";
+import { ref, database, get } from "../../config/DatabaseConnection";
 
 const NavBar = () => {
   const { user, logOut, handleFormSubmit } = useContext(UserContext);
   const [dropMenu, setDropMenu] = useState(false);
   const navigate = useNavigate();
 
-  //TODO: =================================
+  //TODO: ⬇️ =================================
   const manualLogin = () => {
     // Check if user is already logged in using localStorage
     const storedUser = localStorage.getItem("user");
@@ -28,7 +28,25 @@ const NavBar = () => {
     manualLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //TODO: ⬆️ =================================
 
+  // Fetching user role to verify Farmer or Customer ========================
+  const [userRole, setUserRole] = useState(null); // State to store user's role
+  const fetchUserRole = async () => {
+    if (user && user.uid) {
+      try {
+        // Fetch role
+        const roleRef = ref(database, `users/${user.uid}/role`);
+        const roleSnapshot = await get(roleRef);
+        const role = roleSnapshot.val();
+        if (role) {
+          setUserRole(role);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    }
+  };
   setTimeout(() => {
     // Fetch user's role if user is authenticated
     if (user && user.uid) {
@@ -36,18 +54,7 @@ const NavBar = () => {
     }
   }, 1000);
 
-  // for user Role fetching to verify user's role Farmer or Customer
-  const [userRole, setUserRole] = useState(null); // State to store user's role
-  const fetchUserRole = async () => {
-    try {
-      const role = await getUserRole(user.uid); // Fetch user's role from the database
-      setUserRole(role);
-    } catch (error) {
-      console.error("Error fetching user role:", error);
-    }
-  };
-
-  //handle sign out
+  // handle sign out ===================
   const handleSignOut = async () => {
     try {
       await logOut().then(() => navigate("/"));

@@ -37,11 +37,13 @@ const UserGoogleAuthentication = ({ children }) => {
       if (currentUser) {
         console.log("Current user: ", currentUser);
         // If user is newly authenticated (not just user object exists), insert their displayName and email into Realtime Database
-        if (currentUser.email && currentUser.displayName) {
+        if (currentUser.uid && currentUser.email && currentUser.displayName) {
           insertGoogleAuthData(
             currentUser.uid,
             currentUser.email,
-            currentUser.displayName
+            currentUser.displayName,
+            null,
+            null
           );
         }
       } else {

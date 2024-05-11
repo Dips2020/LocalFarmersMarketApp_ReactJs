@@ -14,44 +14,23 @@ export const insertUserData = (data) => {
     });
 };
 
-//? ================= Function to insert Google authentication data into the database
-export const insertGoogleAuthData = (
-  uid,
-  email,
-  displayName,
-  role,
-  storeName
-) => {
-  const userData = {
+//? ================= Function to insert Google authentication data into the database (uid, email and displayName)
+export const insertGoogleAuthData = (uid, email, displayName) => {
+  update(ref(database, `users/${uid}`), {
     email: email,
     displayName: displayName,
-    role: role,
-    storeName: storeName,
-  };
-  // Conditionally add storeName to userData if role is Farmer
-  if (role === "Farmer") {
-    userData.storeName = storeName;
-  } else {
-    userData.storeName = null;
-  }
-  // Define the path to the user's data node using their UID
-  const userRef = ref(database, `users/${uid}`);
-
-  // Set the user data in the database under the user's UID node
-  set(userRef, userData)
+  })
     .then(() => {
       console.log("Google authentication data inserted successfully.");
     })
     .catch((error) => {
-      console.error("Error inserting Google authentication data:", error);
+      console.log("Error inserting Google authentication data:", error);
     });
 };
 
 //? ================ Function to add products
 export const insertUserProduct = (
   uid,
-  email,
-  displayName,
   imgUrl,
   productNames = null,
   price = null,
@@ -78,42 +57,6 @@ export const insertUserProduct = (
       .catch((error) => {
         console.error("Error inserting product data:", error);
       });
-  } else {
-    // If productNames is not provided, it means we are storing user authentication data
-    // Define user data
-    const userData = {
-      email: email,
-      displayName: displayName,
-    };
-
-    // Define the path to the user's data node using their UID
-    const userRef = ref(database, `users/${uid}`);
-
-    // Set the user data in the database under the user's UID node
-    set(userRef, userData)
-      .then(() => {
-        console.log("Google authentication data inserted successfully.");
-      })
-      .catch((error) => {
-        console.error("Error inserting Google authentication data:", error);
-      });
-  }
-};
-
-//? ================== get user Role
-export const getUserRole = async (uid) => {
-  try {
-    const userRef = ref(database, `users/${uid}`);
-    const snapshot = await get(userRef);
-    if (snapshot.exists()) {
-      const userData = snapshot.val();
-      return userData.role;
-    } else {
-      throw new Error("User data not found");
-    }
-  } catch (error) {
-    console.error("Error fetching user role:", error);
-    throw error;
   }
 };
 
