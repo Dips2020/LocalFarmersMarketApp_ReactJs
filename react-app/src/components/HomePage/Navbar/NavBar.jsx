@@ -7,7 +7,7 @@ import { GiFarmer } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import pp from "../../../assets/profile/pp.jpg";
-import { FaShoppingCart } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
 import { ref, database, get } from "../../config/DatabaseConnection";
 
 const NavBar = () => {
@@ -118,7 +118,7 @@ const NavBar = () => {
       {user?.email ? (
         <div className="w-[150px] flex justify-around items-center">
           <Link to="addToCart">
-            <FaShoppingCart className="h-[50px] w-[50px] cursor-pointer text-white" />
+            <IoMdCart className="h-[50px] w-[50px] cursor-pointer text-white" />
           </Link>
           <img
             ref={imgRef}

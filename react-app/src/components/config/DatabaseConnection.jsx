@@ -8,6 +8,7 @@ import {
   onValue,
   get,
   remove,
+  push,
 } from "firebase/database";
 import { getAuth } from "firebase/auth"; // adding google authentication
 //* for uploading image from UserProduct.jsx
@@ -32,4 +33,4 @@ const auth = getAuth(app);
 //* for uploading image from UserProduct.jsx
 const imgDB = getStorage(app);
 
-export { database, ref, set, update, onValue, auth, get, imgDB, remove };
+export { database, ref, set, update, onValue, auth, get, imgDB, remove, push };
